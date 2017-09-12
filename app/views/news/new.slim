@@ -1,0 +1,24 @@
+- if flash[:notice]
+  p.flash-notice= flash[:notice]
+= form_for @news_item, url: news_path, method: :post do |f|
+  - if @news_item.errors.any?
+    #error_explanation
+      h2 = t('.validation_errors_exist', errors: pluralize(@news_item.errors.count, "error"))
+      ul
+        - @news_item.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :header
+    = f.text_field :header
+  br
+  .field
+    = f.label :annotation
+    = f.text_field :annotation
+  br
+  .field
+    = f.label :expired_at
+    = f.datetime_field :expired_at
+  = f.hidden_field :authored_item, value: 1
+  br
+  .actions = f.submit t('.create_news_item')

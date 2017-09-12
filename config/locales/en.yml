@@ -30,4 +30,9 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  news:
+    create:
+      news_item_created: 'News item was successfully created.'
+    new:
+      create_news_item: 'Create News'
+      validation_errors_exist: '%{errors} prohibited this news item from being saved:'
