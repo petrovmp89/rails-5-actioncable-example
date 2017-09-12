@@ -1,5 +1,5 @@
 h1 index
 - if @news_item
-  h4 = @news_item.header
-  p = @news_item.annotation
-  p = @news_item.date.to_date
+  h4#header = @news_item.header
+  p#annotation = @news_item.annotation
+  p#date = @news_item.date.to_date

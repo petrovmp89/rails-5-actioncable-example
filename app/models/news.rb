@@ -8,6 +8,7 @@ class News
   field :date, type: DateTime
 
   before_validation :set_date
+  after_save :update_views
 
   validates_presence_of :header, :annotation, :expired_at, :date
 
@@ -17,5 +18,9 @@ class News
 
   def set_date
     self.date = Time.now if authored_item == true
+  end
+
+  def update_views
+    ActionCable.server.broadcast 'news_channel', News.main_authored_item
   end
 end
