@@ -1,10 +1,10 @@
 class NewsController < ApplicationController
   def index
-    @news_item = News.main
+    @news_item = News.authored || News.from_yandex
   end
 
   def new
-    @news_item = News.main || News.new
+    @news_item = News.authored || News.new
   end
 
   def create

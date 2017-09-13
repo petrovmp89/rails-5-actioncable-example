@@ -4,7 +4,7 @@ class News
   field :header, type: String
   field :annotation, type: String
   field :expired_at, type: DateTime
-  field :authored_item, type: Boolean
+  field :authored_item, type: Boolean, default: false
   field :date, type: DateTime
 
   before_validation :set_date
@@ -12,8 +12,14 @@ class News
 
   validates_presence_of :header, :annotation, :expired_at, :date
 
-  def self.main
-    where(authored_item: true).where('expired_at' => {'$gt' => Time.now.utc}).order_by(created_at: :desc).first
+  scope :recent, -> { where('expired_at' => {'$gt' => Time.now.utc}).order_by(created_at: :desc) }
+
+  def self.authored
+    where(authored_item: true).recent.first
+  end
+
+  def self.from_yandex
+    where(authored_item: false).recent.first
   end
 
   def set_date
@@ -21,6 +27,12 @@ class News
   end
 
   def update_views
-    ActionCable.server.broadcast 'news_channel', News.main
+    actual_news = News.authored || News.from_yandex
+    attrs = {
+      header: actual_news.header,
+      annotation: actual_news.annotation.html_safe,
+      date: actual_news.date.to_date
+    }
+    ActionCable.server.broadcast 'news_channel', attrs
   end
 end
