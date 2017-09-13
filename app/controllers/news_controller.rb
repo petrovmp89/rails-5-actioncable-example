@@ -1,14 +1,15 @@
 class NewsController < ApplicationController
   def index
-    @news_item = News.main_authored_item
+    @news_item = News.main
   end
 
   def new
-    @news_item = News.main_authored_item || News.new
+    @news_item = News.main || News.new
   end
 
   def create
     @news_item = News.new(news_params)
+    @news_item.authored_item = true
     respond_to do |format|
       if @news_item.save
         format.html { redirect_to '/admin', notice: t('.news_item_created') }
@@ -21,6 +22,6 @@ class NewsController < ApplicationController
   private
 
   def news_params
-    params.require(:news).permit(:header, :annotation, :expired_at, :authored_item)
+    params.require(:news).permit(:header, :annotation, :expired_at)
   end
 end

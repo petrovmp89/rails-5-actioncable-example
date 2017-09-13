@@ -12,8 +12,8 @@ class News
 
   validates_presence_of :header, :annotation, :expired_at, :date
 
-  def self.main_authored_item
-    where(authored_item: true).where({'expired_at' => {'$gt' => Time.now.utc}}).order_by(created_at: :asc).last
+  def self.main
+    where(authored_item: true).where('expired_at' => {'$gt' => Time.now.utc}).order_by(created_at: :desc).first
   end
 
   def set_date
@@ -21,6 +21,6 @@ class News
   end
 
   def update_views
-    ActionCable.server.broadcast 'news_channel', News.main_authored_item
+    ActionCable.server.broadcast 'news_channel', News.main
   end
 end
