@@ -1,24 +1,20 @@
-# README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
+# Test Task
 
 * Ruby version
-
+  - 2.4.1
+* Rails version
+  - 5.1.4
 * System dependencies
+  - redis-server
+  - mongodb
+  - nodejs
+* How to run app locally
 
-* Configuration
+  `whenever --update-crontab`
 
-* Database creation
+  `rails s`
+* How to run app container
 
-* Database initialization
+  `docker build . -t test_task_image`
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+  `docker run -p 0.0.0.0:3000:3000 -it --name test_task_container test_task_image`
