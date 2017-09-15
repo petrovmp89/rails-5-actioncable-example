@@ -1,8 +1,8 @@
 div#header
- = @news_item&.header
+  h4 = @news_item&.header
 div#annotation
- = @news_item&.annotation&.html_safe
+  p = @news_item&.annotation&.html_safe
 div#date
- = @news_item&.date&.to_date
+  p = @news_item&.date&.to_date
 - unless @news_item
   h4#no-news No actual news

@@ -3,7 +3,7 @@
 = form_for @news_item, url: news_path, method: :post do |f|
   - if @news_item.errors.any?
     #error_explanation
-      h2 = t('.validation_errors_exist', errors: pluralize(@news_item.errors.count, "error"))
+      h2 = t('.validation_errors_exist', errors: pluralize(@news_item.errors.count, 'error'))
       ul
         - @news_item.errors.full_messages.each do |message|
           li = message

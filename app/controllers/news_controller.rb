@@ -1,6 +1,6 @@
 class NewsController < ApplicationController
   def index
-    @news_item = News.authored || News.from_yandex
+    @news_item = News.main
   end
 
   def new
@@ -8,8 +8,7 @@ class NewsController < ApplicationController
   end
 
   def create
-    @news_item = News.new(news_params)
-    @news_item.authored_item = true
+    @news_item = News.new(news_params.merge(authored_item: true))
     respond_to do |format|
       if @news_item.save
         format.html { redirect_to '/admin', notice: t('.news_item_created') }
